@@ -37,6 +37,8 @@ typedef void(^JHUIControlBlock)(id target, id sender);
 
 - (void)jh_handleEvent:(UIControlEvents)events inTarget:(id)target block:(JHUIControlBlock)block;
 
+- (void)jh_removeEvent:(UIControlEvents)events;
+
 @end
 
 NS_ASSUME_NONNULL_END
