@@ -35,31 +35,31 @@ static const char *JHControlDicKey;
 @interface JHUIControlWrapper : NSObject
 
 @property (nonatomic,    weak) id target;
-@property (nonatomic,  assign) UIControlEvents  events;
+@property (nonatomic,    weak) id sender;
 @property (nonatomic,    copy) JHUIControlBlock block;
 
-- (id)initWithEvents:(UIControlEvents)events target:(id)target block:(JHUIControlBlock)block;
+- (id)initWithTarget:(id)target sender:(id)sender block:(JHUIControlBlock)block;
 
 @end
 
 @implementation JHUIControlWrapper
 
-- (id)initWithEvents:(UIControlEvents)events target:(id)target block:(JHUIControlBlock)block{
+- (id)initWithTarget:(id)target sender:(id)sender block:(JHUIControlBlock)block{
     if (self = [super init]) {
-        self.events = events;
         self.target = target;
+        self.sender = sender;
         self.block = block;
     }
     return self;
 }
 
 - (void)action:(id)sender{
-    self.block(_target, self);
+    self.block(_target, _sender);
 }
 
 - (void)dealloc{
-    _events = 0;
     _target = nil;
+    _sender = nil;
     _block = nil;
 }
 
@@ -83,7 +83,7 @@ static const char *JHControlDicKey;
             dic[key] = set;
         }
         
-        JHUIControlWrapper *wrapper = [[JHUIControlWrapper alloc] initWithEvents:events target:target block:block];
+        JHUIControlWrapper *wrapper = [[JHUIControlWrapper alloc] initWithTarget:target sender:self block:block];
         [set addObject:wrapper];
         [self addTarget:wrapper action:@selector(action:) forControlEvents:events];
     }
