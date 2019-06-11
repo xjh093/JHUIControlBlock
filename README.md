@@ -27,5 +27,7 @@ add event:
 ---
 
 # Logs
+2.fix a small bug of `sender`.(2019-06-11)
+
 1.Upload. (2018-10-24)
 
